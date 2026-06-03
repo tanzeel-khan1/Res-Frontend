@@ -16,3 +16,18 @@
   background: #D4AF37;
   color: #181C14;
 }
+
+
+@keyframes swing {
+  0% {
+    transform: translateX(-50%) rotate(-2deg);
+  }
+
+  50% {
+    transform: translateX(-50%) rotate(2deg);
+  }
+
+  100% {
+    transform: translateX(-50%) rotate(-2deg);
+  }
+}
