@@ -131,7 +131,9 @@ const PaymentSuccess = () => {
   return (
     <div className="min-h-screen bg-[#181C14] text-[#D4AF37] px-4 py-10">
       <div className="max-w-2xl mx-auto bg-black/40 border border-[#D4AF37]/30 rounded-2xl p-6 space-y-5">
-        <h1 className="text-3xl font-bold text-center">Payment Successful</h1>
+        <h1 className="text-3xl font-bold text-center">
+          {paidAmount ? "Payment Successful" : "Order Confirmed"}
+        </h1>
         <p className="text-center text-gray-300">
           Aapka order confirm ho gaya hai. Neeche order summary di hui hai.
         </p>

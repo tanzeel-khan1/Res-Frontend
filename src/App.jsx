@@ -115,16 +115,13 @@ function App() {
             {/* Public */}
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignupPage />} />
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/location" element={<LocationPage />} />
+            <Route path="/contact" element={<ContactForm />} />
+            <Route path="/verify-otp" element={<VerifyOtp />} />
 
             {/* User Routes */}
-            <Route
-              path="/"
-              element={
-                <PrivateRoute>
-                  <Dashboard />
-                </PrivateRoute>
-              }
-            />
             <Route
               path="/dishes"
               element={
@@ -182,32 +179,6 @@ function App() {
               }
             />
             <Route
-              path="/contact"
-              element={
-                <PrivateRoute>
-                  <ContactForm />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/location"
-              element={
-                <PrivateRoute>
-                  <LocationPage />
-                </PrivateRoute>
-              }
-            />
-            <Route path="/verify-otp" element={<VerifyOtp />} />
-
-            <Route
-              path="/about"
-              element={
-                <PrivateRoute>
-                  <AboutPage />
-                </PrivateRoute>
-              }
-            />
-            <Route
               path="/online"
               element={
                 <PrivateRoute>
@@ -220,14 +191,6 @@ function App() {
               element={
                 <PrivateRoute>
                   <Profile />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/signup"
-              element={
-                <PrivateRoute>
-                  <SignupPage />
                 </PrivateRoute>
               }
             />

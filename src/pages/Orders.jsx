@@ -15,6 +15,7 @@ const Orders = () => {
 
   const [dishes, setDishes] = useState([]);
   const [selectedDishes, setSelectedDishes] = useState([]);
+  const [submitting, setSubmitting] = useState(false);
 
   /* ===============================
      🔐 ACCESS CONTROL
@@ -88,7 +89,7 @@ const Orders = () => {
     0,
   );
 
-  const handleCreateOrder = () => {
+  const handleCreateOrder = async () => {
     if (!tableId) return toast.error("Please select a table");
     if (!orderDate || !orderTime) return toast.error("Select date & time");
     if (!selectedDishes.length) return toast.error("Select at least one dish");
@@ -97,7 +98,7 @@ const Orders = () => {
       `${orderDate}T${orderTime}`,
     ).toISOString();
 
-    const orderDraft = {
+    const orderPayload = {
       tableId,
       dishes: selectedDishes.map((d) => ({
         dish: d.dish._id,
@@ -107,14 +108,21 @@ const Orders = () => {
       orderDate: selectedDateTime,
     };
 
-    const advanceAmount = Number((totalPrice * 0.3).toFixed(2));
-    localStorage.setItem("pendingOrderDraft", JSON.stringify(orderDraft));
-    navigate(`/payment/${tableId}`, {
-      state: {
-        amount: advanceAmount,
-        currency: "usd",
-      },
-    });
+    setSubmitting(true);
+    try {
+      const { data } = await API.post("/orders", orderPayload);
+      const orderId = data?.order?._id;
+      if (!orderId) {
+        toast.error("Order placed but ID not returned");
+        return;
+      }
+      toast.success("Order placed successfully!");
+      navigate(`/payment-success/${orderId}`);
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to place order");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -214,9 +222,10 @@ const Orders = () => {
 
       <button
         onClick={handleCreateOrder}
-        className="w-full mt-6 py-2 rounded-lg cursor-pointer text-black font-bold transition flex items-center justify-center gap-2 bg-[#D4AF37] hover:bg-amber-400"
+        disabled={submitting}
+        className="w-full mt-6 py-2 rounded-lg cursor-pointer text-black font-bold transition flex items-center justify-center gap-2 bg-[#D4AF37] hover:bg-amber-400 disabled:opacity-60"
       >
-        Pay Advance & Place Order
+        {submitting ? "Placing Order..." : "Place Order"}
       </button>
     </div>
   );

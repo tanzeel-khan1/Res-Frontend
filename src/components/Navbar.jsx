@@ -1,8 +1,17 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+
+const navLinkClass = ({ isActive }) =>
+  `text-amber-400 px-3 py-2 text-sm font-medium relative
+   ${isActive ? "border-b-2 border-amber-400" : ""}`;
+
+const authButtonClass =
+  "bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-600 hover:to-amber-500 text-slate-800 px-4 lg:px-6 py-2 rounded-lg text-sm lg:text-base font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 transform";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user } = useAuth();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -12,6 +21,13 @@ const Navbar = () => {
     setIsMenuOpen(false);
   };
 
+  const navItems = [
+    { name: "Dashboard", path: "/" },
+    { name: "About", path: "/about" },
+    { name: "Location", path: "/location" },
+    { name: "Contact", path: "/contact" },
+  ];
+
   return (
     <nav
       className="bg-[#181C14] shadow-orange-400 relative z-50 backdrop-blur-sm"
@@ -20,61 +36,49 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 sm:h-18 lg:h-20">
           <div className="flex-shrink-0">
-            <h1 className="text-amber-400 md:ml-0 ml-2 font-bold text-xl sm:text-2xl lg:text-3xl tracking-wider hover:text-amber-300 transition-colors duration-300 cursor-pointer">
-              FineTaste Restaurant
-            </h1>
+            <NavLink to="/">
+              <h1 className="text-amber-400 md:ml-0 ml-2 font-bold text-xl sm:text-2xl lg:text-3xl tracking-wider hover:text-amber-300 transition-colors duration-300 cursor-pointer">
+                FineTaste Restaurant
+              </h1>
+            </NavLink>
           </div>
 
           <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
-            <NavLink
-              to="/"
-              className={({ isActive }) =>
-                `text-amber-400 px-3 py-2 text-sm font-medium relative
-     ${isActive ? "border-b-2 border-amber-400" : ""}`
-              }
-            >
+            <NavLink to="/" className={navLinkClass}>
               DashBoard
             </NavLink>
 
-            <NavLink
-              to="/about"
-              className={({ isActive }) =>
-                `text-amber-400 px-3 py-2 text-sm font-medium relative
-     ${isActive ? "border-b-2 border-amber-400" : ""}`
-              }
-            >
+            <NavLink to="/about" className={navLinkClass}>
               About
             </NavLink>
 
-            <NavLink
-              to="/location"
-              className={({ isActive }) =>
-                `text-amber-400 px-3 py-2 text-sm font-medium relative
-     ${isActive ? "border-b-2 border-amber-400" : ""}`
-              }
-            >
+            <NavLink to="/location" className={navLinkClass}>
               Location
             </NavLink>
 
-            <NavLink
-              to="/contact"
-              className={({ isActive }) =>
-                `text-amber-400 px-3 py-2 text-sm font-medium relative
-     ${isActive ? "border-b-2 border-amber-400" : ""}`
-              }
-            >
+            <NavLink to="/contact" className={navLinkClass}>
               Contact
             </NavLink>
 
-            <a
-              href="/profile"
-              className="bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-600 hover:to-amber-500 text-slate-800 px-4 lg:px-6 py-2 rounded-lg text-sm lg:text-base font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 transform"
-            >
-              Profile
-            </a>
+            {user ? (
+              <NavLink to="/profile" className={authButtonClass}>
+                Profile
+              </NavLink>
+            ) : (
+              <div className="flex items-center gap-3">
+                <NavLink
+                  to="/login"
+                  className="text-amber-400 px-3 py-2 text-sm font-medium hover:text-amber-300 transition-colors"
+                >
+                  Login
+                </NavLink>
+                <NavLink to="/signup" className={authButtonClass}>
+                  Sign Up
+                </NavLink>
+              </div>
+            )}
           </div>
 
-         
           <div className="md:hidden">
             <button
               onClick={toggleMenu}
@@ -114,27 +118,16 @@ const Navbar = () => {
       <div
         className={`md:hidden transition-all duration-500 ease-in-out overflow-hidden ${
           isMenuOpen
-            ? "max-h-80 opacity-100 transform translate-y-0"
+            ? "max-h-96 opacity-100 transform translate-y-0"
             : "max-h-0 opacity-0 transform -translate-y-2"
         }`}
       >
         <div className="px-4 pt-4 pb-6 space-y-3 bg-[#181C14] shadow-inner border-t border-slate-600">
-          {[
-            { name: "Dashboard", path: "/dashboard" },
-            { name: "About", path: "/about" },
-            { name: "Location", path: "/location" },
-            { name: "Contact", path: "/contact" },
-
-            { name: "Profile", path: "/profile" },
-          ].map((item) => (
-            <a
+          {navItems.map((item) => (
+            <NavLink
               key={item.name}
-              href={item.path}
-              className={`block w-full text-left px-4 py-3 text-base font-medium rounded-lg transition-all duration-300 transform hover:scale-105 ${
-                item.name === "Contact"
-                  ? "bg-gradient-to-r from-amber-500 to-amber-400 text-slate-800 font-semibold hover:from-amber-600 hover:to-amber-500 shadow-lg"
-                  : "text-slate-200 hover:text-amber-400 hover:bg-black border border-transparent hover:border-amber-400/30"
-              }`}
+              to={item.path}
+              className="block w-full text-left px-4 py-3 text-base font-medium rounded-lg transition-all duration-300 transform hover:scale-105 text-slate-200 hover:text-amber-400 hover:bg-black border border-transparent hover:border-amber-400/30"
               onClick={closeMenu}
             >
               <span className="flex items-center">
@@ -153,8 +146,35 @@ const Navbar = () => {
                   />
                 </svg>
               </span>
-            </a>
+            </NavLink>
           ))}
+
+          {user ? (
+            <NavLink
+              to="/profile"
+              className={`block w-full text-left px-4 py-3 text-base font-semibold rounded-lg ${authButtonClass}`}
+              onClick={closeMenu}
+            >
+              Profile
+            </NavLink>
+          ) : (
+            <>
+              <NavLink
+                to="/login"
+                className="block w-full text-left px-4 py-3 text-base font-medium rounded-lg text-slate-200 hover:text-amber-400 hover:bg-black border border-transparent hover:border-amber-400/30"
+                onClick={closeMenu}
+              >
+                Login
+              </NavLink>
+              <NavLink
+                to="/signup"
+                className={`block w-full text-center px-4 py-3 text-base font-semibold rounded-lg ${authButtonClass}`}
+                onClick={closeMenu}
+              >
+                Sign Up
+              </NavLink>
+            </>
+          )}
         </div>
       </div>
 
