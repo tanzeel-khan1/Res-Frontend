@@ -9,19 +9,34 @@ const Menu = () => {
   const [showAll, setShowAll] = useState(false);
   const menuRef = useRef(null);
 
-  const {
-    data: dishes = [],
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["dishes"],
-    queryFn: async () => {
-      const { data } = await API.get("/dishes");
-      return data;
-    },
-  });
+  // const {
+  //   data: dishes = [],
+  //   isLoading,
+  //   isError,
+  //   error,
+  // } = useQuery({
+  //   queryKey: ["dishes"],
+  //   queryFn: async () => {
+  //     const { data } = await API.get("/dishes");
+  //     return data;
+  //   },
+  // });
+const {
+  data: dishes = [],
+  isLoading,
+  isError,
+  error,
+} = useQuery({
+  queryKey: ["dishes"],
+  queryFn: async () => {
+    const { data } = await API.get("/dishes");
+    return data;
+  },
 
+  retry: 4, // 5 baar retry karega
+  retryDelay: (attemptIndex) =>
+    Math.min(1000 * 2 ** attemptIndex, 10000), // 1s, 2s, 4s, 8s...
+});
   const visibleDishes = showAll ? dishes : dishes.slice(0, 4);
 
   const handleToggle = () => {
