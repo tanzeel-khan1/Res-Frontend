@@ -36,7 +36,7 @@ const Footer = () => {
               Instagram
             </a>
             <a
-              href="https://www.facebook.com/"
+              href="https://www.facebook.com/profile.php?id=61592072282611"
               target="_blank"
               rel="noopener noreferrer"
               className="transition hover:text-white"
@@ -61,7 +61,7 @@ const Footer = () => {
           <p className="mt-2 text-xs text-[#D4AF37]/60">
             Developed by{" "}
             <a
-              href="https://portfolio-theta-seven-52.vercel.app/"
+              href="https://tanzilbuilds.netlify.app"
               target="_blank"
               rel="noopener noreferrer"
               className="font-medium text-white hover:text-[#D4AF37] transition"
