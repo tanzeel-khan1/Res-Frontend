@@ -7,6 +7,7 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
+
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { useEffect } from "react";
 import Dishes from "./pages/Dishes";

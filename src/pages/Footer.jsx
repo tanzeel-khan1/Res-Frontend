@@ -19,6 +19,8 @@ const Footer = () => {
           <p className="text-sm text-[#D4AF37]/80">
             123 Luxury Ave, Gourmet City
           </p>
+
+          
           <p className="text-sm text-[#D4AF37]/80">Phone: +1 (555) 123-4567</p>
           <p className="text-sm text-[#D4AF37]/80">Email: info@finetaste.com</p>
         </div>
