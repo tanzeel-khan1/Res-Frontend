@@ -1,5 +1,5 @@
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Stars } from "@react-three/drei";
+// import { Stars } from "@react-three/drei";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
 
@@ -98,13 +98,13 @@ export default function SignupBackground() {
 
       <Particles />
 
-      <Stars
+      {/* <Stars
         radius={100}
         depth={50}
         count={4000}
         factor={4}
         fade
-      />
+      /> */}
     </Canvas>
   );
 }
