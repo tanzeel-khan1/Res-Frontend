@@ -6,15 +6,12 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-
 node_modules
 dist
 dist-ssr
 *.local
 
 # Editor directories and files
-.vscode/*
-!.vscode/extensions.json
 .idea
 .DS_Store
 *.suo
@@ -24,10 +21,9 @@ dist-ssr
 *.sw?
 # Environment variables
 
-branch_structure.json
 
-<<<<<<< HEAD
-=======
+branch_structure.json
 temp_auto_push.bat
 temp_interactive_push.bat
->>>>>>> adc69b1aa8a8e827125e1aecce1c3e3fb916f1b9
+.gitignore
+config.bat
